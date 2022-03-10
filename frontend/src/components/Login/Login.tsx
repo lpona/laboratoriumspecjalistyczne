@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { setUserSession } from './Utils/Common';
+import { setUserSession } from '../../Utils/Common';
 
 function Login(props: any) {
   const [loading, setLoading] = useState(false);

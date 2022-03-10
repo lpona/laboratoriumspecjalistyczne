@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
-import Login from './Login';
-import Dashboard from './Dashboard';
-import Home from './Home';
+import Login from '../Login/Login';
+import Dashboard from '../Dashboard/Dashboard';
+import Home from '../Home/Home';
 
-import PrivateRoute from './Utils/PrivateRoute';
-import PublicRoute from './Utils/PublicRoute';
-import { getToken, removeUserSession, setUserSession } from './Utils/Common';
+import PrivateRoute from '../../Utils/PrivateRoute';
+import PublicRoute from '../../Utils/PublicRoute';
+import { getToken, removeUserSession, setUserSession } from '../../Utils/Common';
+import './index.scss';
 
 function App() {
   const [authLoading, setAuthLoading] = useState(true);
