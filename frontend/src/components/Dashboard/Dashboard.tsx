@@ -1,5 +1,6 @@
 import React from 'react';
-import { getUser, removeUserSession } from './Utils/Common';
+import { getUser, removeUserSession } from '../../Utils/Common';
+import './Dashboard.scss'
 
 function Dashboard(props: any) {
   const user = getUser();
@@ -11,9 +12,9 @@ function Dashboard(props: any) {
   }
 
   return (
-    <div>
+    <div className='dashboard'>
       Welcome {user.name}!<br /><br />
-      <input type="button" onClick={handleLogout} value="Logout" />
+      <input  type="button" onClick={handleLogout} value="Logout" />
     </div>
   );
 }
