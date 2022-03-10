@@ -1,7 +1,7 @@
 import React from 'react';
 import { getUser, removeUserSession } from './Utils/Common';
 
-function Dashboard(props) {
+function Dashboard(props: any) {
   const user = getUser();
 
   // handle click event of logout button

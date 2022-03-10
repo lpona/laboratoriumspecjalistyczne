@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { setUserSession } from './Utils/Common';
 
-function Login(props) {
+function Login(props: any) {
   const [loading, setLoading] = useState(false);
   const username = useFormInput('');
   const password = useFormInput('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   // handle button click of login form
   const handleLogin = () => {
-    setError(null);
+    setError("");
     setLoading(true);
     axios.post('http://localhost:4000/users/signin', { username: username.value, password: password.value }).then(response => {
       setLoading(false);
@@ -40,10 +40,10 @@ function Login(props) {
   );
 }
 
-const useFormInput = initialValue => {
+const useFormInput: any = (initialValue: string) => {
   const [value, setValue] = useState(initialValue);
 
-  const handleChange = e => {
+  const handleChange: any = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setValue(e.target.value);
   }
   return {
