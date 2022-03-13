@@ -6,10 +6,10 @@ import {
   getToken,
   removeUserSession,
   setUserSession,
-} from '../../utils/Common';
-import { darkTheme } from '../../utils/mui';
-import PrivateRoute from '../../utils/PrivateRoute';
-import PublicRoute from '../../utils/PublicRoute';
+} from '../../Utils/Common';
+import { darkTheme } from '../../Utils/mui';
+import PrivateRoute from '../../Utils/PrivateRoute';
+import PublicRoute from '../../Utils/PublicRoute';
 import Dashboard from '../Dashboard/Dashboard';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
