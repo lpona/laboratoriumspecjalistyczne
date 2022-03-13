@@ -11,7 +11,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import backgroundVideo from '../../assets/videos/background.mp4';
-import { setUserSession } from '../../utils/Common';
+import { setUserSession } from '../../Utils/Common';
 import './Login.scss';
 
 function Login(props: any) {

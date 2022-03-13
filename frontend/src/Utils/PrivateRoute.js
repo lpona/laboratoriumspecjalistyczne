@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { getToken } from './Common';
+import { getToken } from '../Utils/Common';
 
 // handle the private routes
 function PrivateRoute({ component: Component, ...rest }) {
