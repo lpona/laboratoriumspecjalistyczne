@@ -56,57 +56,59 @@ function Login(props: any) {
 
   return (
     <Box className='login'>
-      {backgroundVideoElement}
-      <Card className='login__card'>
-        <CardContent>
-          <Grid container rowGap={2}>
-            <Grid item xs={12}>
-              <Typography
-                align='center'
-                color='secondary'
-                sx={{ fontSize: 14 }}
-              >
-                Enter your username and password
-              </Typography>
+      <>
+        {backgroundVideoElement}
+        <Card className='login__card'>
+          <CardContent>
+            <Grid container rowGap={2}>
+              <Grid item xs={12}>
+                <Typography
+                  align='center'
+                  color='secondary'
+                  sx={{ fontSize: 14 }}
+                >
+                  Enter your username and password
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  className='login__card__username-input'
+                  label='Username'
+                  variant='standard'
+                  error={!!error}
+                  helperText={error ? 'Invalid username' : ''}
+                  color='secondary'
+                  autoFocus
+                  {...username}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  className='login__card__password-input'
+                  label='Password'
+                  variant='standard'
+                  error={!!error}
+                  helperText={error ? 'Invalid password' : ''}
+                  color='secondary'
+                  type='password'
+                  {...password}
+                />
+              </Grid>
+              <Grid item xs={12} marginTop={1}>
+                <Button
+                  variant='outlined'
+                  disabled={loading}
+                  onClick={handleLogin}
+                  color='secondary'
+                  fullWidth
+                >
+                  {loading ? 'Loading...' : 'Login'}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                className='login__card__username-input'
-                label='Username'
-                variant='standard'
-                error={error}
-                helperText={error ? 'Invalid username' : ''}
-                color='secondary'
-                autoFocus
-                {...username}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                className='login__card__password-input'
-                label='Password'
-                variant='standard'
-                error={error}
-                helperText={error ? 'Invalid password' : ''}
-                color='secondary'
-                type='password'
-                {...password}
-              />
-            </Grid>
-            <Grid item xs={12} marginTop={1}>
-              <Button
-                variant='outlined'
-                disabled={loading}
-                onClick={handleLogin}
-                color='secondary'
-                fullWidth
-              >
-                {loading ? 'Loading...' : 'Login'}
-              </Button>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </>
     </Box>
   );
 }
