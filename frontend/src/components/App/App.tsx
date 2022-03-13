@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
@@ -6,6 +7,7 @@ import {
   removeUserSession,
   setUserSession,
 } from '../../utils/Common';
+import { darkTheme } from '../../utils/mui';
 import PrivateRoute from '../../utils/PrivateRoute';
 import PublicRoute from '../../utils/PublicRoute';
 import Dashboard from '../Dashboard/Dashboard';
@@ -39,32 +41,34 @@ function App() {
   }
 
   return (
-    <div className='App'>
-      <BrowserRouter>
-        <div>
-          <div className='header'>
-            <NavLink exact activeClassName='active' to='/'>
-              Home
-            </NavLink>
-            <NavLink activeClassName='active' to='/login'>
-              Login
-            </NavLink>
-            <small>(Access without token only)</small>
-            <NavLink activeClassName='active' to='/dashboard'>
-              Dashboard
-            </NavLink>
-            <small>(Access with token only)</small>
-          </div>
+    <ThemeProvider theme={darkTheme}>
+      <div className='App'>
+        <BrowserRouter>
           <div>
-            <Switch>
-              <Route exact path='/' component={Home} />
-              <PublicRoute path='/login' component={Login} />
-              <PrivateRoute path='/dashboard' component={Dashboard} />
-            </Switch>
+            <div className='header'>
+              <NavLink exact activeClassName='active' to='/'>
+                Home
+              </NavLink>
+              <NavLink activeClassName='active' to='/login'>
+                Login
+              </NavLink>
+              <small>(Access without token only)</small>
+              <NavLink activeClassName='active' to='/dashboard'>
+                Dashboard
+              </NavLink>
+              <small>(Access with token only)</small>
+            </div>
+            <div>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <PublicRoute path='/login' component={Login} />
+                <PrivateRoute path='/dashboard' component={Dashboard} />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </BrowserRouter>
-    </div>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }
 
