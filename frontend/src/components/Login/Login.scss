@@ -1,24 +1,30 @@
 #background-video {
   position: absolute;
   inset: 0;
-  width: 100wv;
-  height: 100vh;
   z-index: -1;
+
+  .background-box {
+    display: flex;
+    z-index: auto;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(140deg, #00000069, #00000000 2px, #00000069 2px, #00000000 2px);
+  }
 
   video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
+    z-index: -1;
   }
 }
 
 .login {
-  width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 
   &__card {
     width: 90%;
@@ -27,6 +33,9 @@
     &__username-input,
     &__password-input {
       width: 100%;
+      div > input {
+        padding: 0.5em;
+      }
     }
   }
 }
