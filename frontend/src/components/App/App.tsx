@@ -11,6 +11,7 @@ import { darkTheme } from '../../Utils/mui';
 import PrivateRoute from '../../Utils/PrivateRoute';
 import PublicRoute from '../../Utils/PublicRoute';
 import Dashboard from '../Dashboard/Dashboard';
+import Header from '../Header/Header';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import './App.scss';
@@ -45,19 +46,7 @@ function App() {
       <div className='App'>
         <BrowserRouter>
           <div>
-            <div className='header'>
-              <NavLink exact activeClassName='active' to='/'>
-                Home
-              </NavLink>
-              <NavLink activeClassName='active' to='/login'>
-                Login
-              </NavLink>
-              <small>(Access without token only)</small>
-              <NavLink activeClassName='active' to='/dashboard'>
-                Dashboard
-              </NavLink>
-              <small>(Access with token only)</small>
-            </div>
+            <Header />
             <div>
               <Switch>
                 <Route exact path='/' component={Home} />

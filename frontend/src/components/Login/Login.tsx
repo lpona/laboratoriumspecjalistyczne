@@ -47,10 +47,14 @@ function Login(props: any) {
    * inside `div#root` sibling
    * due to React Portal.
    */
+  //
+
   const backgroundVideoElement = createPortal(
-    <video autoPlay loop muted>
-      <source src={backgroundVideo} type='video/mp4' />
-    </video>,
+    <div className="background-box">
+      <video autoPlay loop muted>
+        <source src={backgroundVideo} type='video/mp4' />
+      </video>
+    </div>,
     document.getElementById('background-video') as Element
   );
 
