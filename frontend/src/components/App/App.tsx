@@ -10,7 +10,7 @@ import {
 import { darkTheme } from '../../Utils/mui';
 import PrivateRoute from '../../Utils/PrivateRoute';
 import PublicRoute from '../../Utils/PublicRoute';
-import Dashboard from '../Dashboard/Dashboard';
+import { Dashboard } from '../Dashboard/Dashboard';
 import Header from '../Header/Header';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
