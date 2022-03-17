@@ -16,7 +16,7 @@ function Dashboard(props: any) {
     <div className='dashboard'>
       Welcome {user.name}!<br />
       <br />
-      <input type='button' onClick={handleLogout} value='Logout' />
+      <input type='button' onClick={handleLogout} value='Logout' className='buttonOut' />
       <Footer />
     </div>
   );
