@@ -1,6 +1,14 @@
 .dashboard{
   padding-top: 120px;
+  background-color: black;
 }
 .buttonOut{
-  position: fixed;
+  padding-top: 0px;
+  //position: fixed;
+}
+
+.idlist {
+  display: flex;
+  flex-wrap: wrap;
+ 
 }
