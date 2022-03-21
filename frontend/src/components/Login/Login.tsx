@@ -7,50 +7,61 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import axios from 'axios';
-import React, { useState } from 'react';
+import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 import backgroundVideo from '../../assets/videos/background.mp4';
-import { setUserSession } from '../../Utils/Common';
+import { signIn } from '../../rtk/currentUserSlice';
+import { AppDispatch, RootState } from '../../rtk/store';
 import './Login.scss';
 
-function Login(props: any) {
-  const [loading, setLoading] = useState(false);
-  const username = useFormInput('');
-  const password = useFormInput('');
-  const [error, setError] = useState('');
+const Login = () => {
+  // Global state.
+  const dispatch = useDispatch<AppDispatch>();
 
-  // handle button click of login form
-  const handleLogin = () => {
-    setError('');
-    setLoading(true);
-    axios
-      .post('http://localhost:4000/users/signin', {
-        username: username.value,
-        password: password.value,
-      })
-      .then((response) => {
-        setLoading(false);
-        setUserSession(response.data.token, response.data.user);
-        props.history.push('/dashboard');
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (error.response.status === 401)
-          setError(error.response.data.message);
-        else setError('Something went wrong. Please try again later.');
-      });
+  const { isLoading, error, _id } = useSelector(
+    (state: RootState) => state.currentUser
+  );
+
+  // Local state.
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Router
+  const history = useHistory();
+
+  // Refs.
+  const abortControllerRef = useRef(() => {});
+
+  // Handlers.
+  const onSubmitHandler = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const signInAsyncThunkPromise = dispatch(signIn({ email, password }));
+
+    abortControllerRef.current = signInAsyncThunkPromise.abort;
+
+    const { token } = await signInAsyncThunkPromise.unwrap();
+
+    localStorage.setItem('token', token);
+
+    if (!!token) history.push('/dashboard');
   };
+
+  // Effects.
+  useEffect(() => () => abortControllerRef.current(), []);
+
+  // Renders
+  if (!!_id) return <Redirect to='/dashboard' />;
 
   /**
    * Background video rendered
    * inside `div#root` sibling
    * due to React Portal.
    */
-  //
-
   const backgroundVideoElement = createPortal(
-    <div className="background-box">
+    <div className='background-box'>
       <video autoPlay loop muted>
         <source src={backgroundVideo} type='video/mp4' />
       </video>
@@ -58,56 +69,77 @@ function Login(props: any) {
     document.getElementById('background-video') as Element
   );
 
+  const cardTitleMessageElement = (
+    <Typography
+      align='center'
+      color={!!error ? 'error' : 'secondary'}
+      sx={{ fontSize: 14 }}
+    >
+      {!!error
+        ? 'Invalid email or password'
+        : isLoading
+        ? 'Loading...'
+        : 'Enter your email and password'}
+    </Typography>
+  );
+
+  const emailInputElement = (
+    <TextField
+      className='login__card__email-input'
+      label='Email'
+      variant='standard'
+      helperText={!!error ? 'Invalid email' : ''}
+      color='secondary'
+      type='email'
+      onChange={(event) => setEmail(event.target.value)}
+      autoFocus
+      {...email}
+    />
+  );
+
+  const passwordInputElement = (
+    <TextField
+      className='login__card__password-input'
+      label='Password'
+      variant='standard'
+      helperText={!!error ? 'Invalid password' : ''}
+      color='secondary'
+      type='password'
+      onChange={(event) => setPassword(event.target.value)}
+      {...password}
+    />
+  );
+
+  const loginButtonElement = (
+    <Button
+      variant='outlined'
+      disabled={isLoading}
+      color='secondary'
+      type='submit'
+      fullWidth
+    >
+      {isLoading ? 'Loading...' : 'Login'}
+    </Button>
+  );
+
   return (
-    <Box className='login'>
+    <Box className='login' component='form' onSubmit={onSubmitHandler}>
       <>
         {backgroundVideoElement}
         <Card className='login__card'>
           <CardContent>
             <Grid container rowGap={2}>
               <Grid item xs={12}>
-                <Typography
-                  align='center'
-                  color='secondary'
-                  sx={{ fontSize: 14 }}
-                >
-                  Enter your username and password
-                </Typography>
+                {cardTitleMessageElement}
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  className='login__card__username-input'
-                  label='Username'
-                  variant='standard'
-                  error={!!error}
-                  helperText={error ? 'Invalid username' : ''}
-                  color='secondary'
-                  autoFocus
-                  {...username}
-                />
+                {emailInputElement}
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  className='login__card__password-input'
-                  label='Password'
-                  variant='standard'
-                  error={!!error}
-                  helperText={error ? 'Invalid password' : ''}
-                  color='secondary'
-                  type='password'
-                  {...password}
-                />
+                {passwordInputElement}
               </Grid>
               <Grid item xs={12} marginTop={1}>
-                <Button
-                  variant='outlined'
-                  disabled={loading}
-                  onClick={handleLogin}
-                  color='secondary'
-                  fullWidth
-                >
-                  {loading ? 'Loading...' : 'Login'}
-                </Button>
+                {loginButtonElement}
               </Grid>
             </Grid>
           </CardContent>
@@ -115,20 +147,6 @@ function Login(props: any) {
       </>
     </Box>
   );
-}
-
-const useFormInput: any = (initialValue: string) => {
-  const [value, setValue] = useState(initialValue);
-
-  const handleChange: any = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setValue(e.target.value);
-  };
-  return {
-    value,
-    onChange: handleChange,
-  };
 };
 
 export default Login;

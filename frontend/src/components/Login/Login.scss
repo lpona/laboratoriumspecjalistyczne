@@ -8,7 +8,13 @@
     z-index: auto;
     width: 100%;
     height: 100%;
-    background: repeating-linear-gradient(140deg, #00000069, #00000000 2px, #00000069 2px, #00000000 2px);
+    background: repeating-linear-gradient(
+      140deg,
+      #00000069,
+      #00000000 2px,
+      #00000069 2px,
+      #00000000 2px
+    );
   }
 
   video {
@@ -30,9 +36,10 @@
     width: 90%;
     max-width: 20rem;
 
-    &__username-input,
+    &__email-input,
     &__password-input {
       width: 100%;
+
       div > input {
         padding: 0.5em;
       }

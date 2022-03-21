@@ -1,14 +1,16 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { getToken } from '../Utils/Common';
+import { useSelector } from 'react-redux';
+import { Redirect, Route } from 'react-router-dom';
+import { RootState } from '../rtk/store';
 
-// handle the private routes
-function PrivateRoute({ component: Component, ...rest }) {
+const PrivateRoute = ({ component: Component, ...rest }: any) => {
+  const _id = useSelector((state: RootState) => state.currentUser._id);
+
   return (
     <Route
       {...rest}
       render={(props) =>
-        getToken() ? (
+        !!_id ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -18,6 +20,6 @@ function PrivateRoute({ component: Component, ...rest }) {
       }
     />
   );
-}
+};
 
 export default PrivateRoute;

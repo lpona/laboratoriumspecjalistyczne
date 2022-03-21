@@ -1,27 +1,39 @@
 .footer {
+  padding: 1rem;
   background-color: #121212;
   position: fixed;
   width: 100%;
   bottom: 0;
   color: #ab47bc;
   font-size: 15px;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05)
+  );
   //box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
- }
- img{
-   background-color: white;
-   border-radius: 10px;
- }
- .gitBox{
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px;
- }
- a{
+
+  .gitBox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+  }
+
+  img {
+    width: 1rem;
+    height: 1rem;
+    background-color: white;
+    border-radius: 10px;
+  }
+}
+
+a {
   color: #ab47bc;
   text-decoration: none;
   padding-left: 5px;
- }
- a:hover{
-   color: white;
- }
+
+  &:hover {
+    color: white;
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "laboratoriumspecjalistyczne",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.0",
+    "concurrently": "^7.0.0",
+    "react-redux": "^7.2.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm start --prefix backend\" \"npm start --prefix frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lpona/laboratoriumspecjalistyczne.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lpona/laboratoriumspecjalistyczne/issues"
+  },
+  "homepage": "https://github.com/lpona/laboratoriumspecjalistyczne#readme"
+}
