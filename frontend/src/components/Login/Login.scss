@@ -36,6 +36,34 @@
     width: 90%;
     max-width: 20rem;
 
+    &__auth-action {
+      position: relative;
+
+      & > span {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        color: #999;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &__arrow-icon {
+        width: 0.8rem !important;
+        height: 0.8rem !important;
+        margin-top: 0.15rem;
+      }
+    }
+
+    &__first-name-input,
+    &__last-name-input,
     &__email-input,
     &__password-input {
       width: 100%;

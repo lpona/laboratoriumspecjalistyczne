@@ -17,7 +17,7 @@ const signUpController = async (req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
 
-  const user = new User({
+  let user = new User({
     firstName,
     lastName,
     email,
@@ -25,12 +25,19 @@ const signUpController = async (req, res) => {
   });
 
   try {
+    // Save to database.
     await user.save();
+
+    // Convert to user object.
+    user = user.toUserObject();
+
+    // Generate token.
+    var token = jwt.sign(user, process.env.JWT_SECRET);
   } catch ({ message }) {
-    res.status(500).json({ message });
+    return res.status(500).json({ message });
   }
 
-  res.status(201).json(user);
+  return res.status(201).json({ user, token });
 };
 
 /**

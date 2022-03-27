@@ -1,4 +1,6 @@
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -6,14 +8,15 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Box } from '@mui/system';
+import {} from '@mui/system';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import backgroundVideo from '../../assets/videos/background.mp4';
-import { signIn } from '../../rtk/currentUserSlice';
+import { authenticate, clearError } from '../../rtk/currentUserSlice';
 import { AppDispatch, RootState } from '../../rtk/store';
+import { TAuthAction } from '../../types';
 import './Login.scss';
 
 const Login = () => {
@@ -25,20 +28,40 @@ const Login = () => {
   );
 
   // Local state.
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Router
+  const [authAction, setAuthAction] = useState<TAuthAction>('logging');
+
+  // Router.
   const history = useHistory();
 
   // Refs.
   const abortControllerRef = useRef(() => {});
 
   // Handlers.
+  const clearFormData = () => {
+    dispatch(clearError());
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPassword('');
+  };
+
+  const changeAuthActionOnClickHandler = () => {
+    clearFormData();
+    if (authAction === 'logging') setAuthAction('registering');
+    if (authAction === 'registering') setAuthAction('logging');
+  };
+
   const onSubmitHandler = async (event: FormEvent) => {
     event.preventDefault();
 
-    const signInAsyncThunkPromise = dispatch(signIn({ email, password }));
+    const signInAsyncThunkPromise = dispatch(
+      authenticate({ firstName, lastName, email, password, authAction })
+    );
 
     abortControllerRef.current = signInAsyncThunkPromise.abort;
 
@@ -52,7 +75,7 @@ const Login = () => {
   // Effects.
   useEffect(() => () => abortControllerRef.current(), []);
 
-  // Renders
+  // Renders.
   if (!!_id) return <Redirect to='/dashboard' />;
 
   /**
@@ -69,48 +92,117 @@ const Login = () => {
     document.getElementById('background-video') as Element
   );
 
+  // Auth action element.
+  let authActionElementTextValue = '';
+
+  if (authAction === 'logging') authActionElementTextValue = 'Register';
+
+  if (authAction === 'registering') authActionElementTextValue = 'Login';
+
+  const authActionElement = (
+    <div
+      className='login__card__auth-action'
+      onClick={changeAuthActionOnClickHandler}
+    >
+      <span>
+        <span>{authActionElementTextValue}</span>
+        <ArrowForwardIosIcon className='login__card__auth-action__arrow-icon' />
+      </span>
+    </div>
+  );
+
+  // Cart title element.
+  let cardTitleMessageElementTextValue = '';
+  let cardTitleMessageElementErrorMessage = '';
+
+  if (authAction === 'logging') {
+    cardTitleMessageElementTextValue = 'Enter your email and password';
+    cardTitleMessageElementErrorMessage = 'Invalid email or password';
+  }
+
+  if (authAction === 'registering') {
+    cardTitleMessageElementTextValue = 'Create new user account';
+    cardTitleMessageElementErrorMessage = 'Registration failed';
+  }
+
   const cardTitleMessageElement = (
     <Typography
+      marginTop='1rem'
       align='center'
       color={!!error ? 'error' : 'secondary'}
       sx={{ fontSize: 14 }}
     >
       {!!error
-        ? 'Invalid email or password'
+        ? cardTitleMessageElementErrorMessage
         : isLoading
         ? 'Loading...'
-        : 'Enter your email and password'}
+        : cardTitleMessageElementTextValue}
     </Typography>
   );
 
+  // First name input element.
+  const firstNameInputElement = (
+    <TextField
+      className='login__card__first-name-input'
+      label='First name'
+      variant='standard'
+      color='secondary'
+      type='text'
+      value={firstName}
+      onChange={(event) => setFirstName(event.target.value)}
+      autoFocus
+    />
+  );
+
+  // Last name input element.
+  const lastNameInputElement = (
+    <TextField
+      className='login__card__last-name-input'
+      label='Last name'
+      variant='standard'
+      color='secondary'
+      type='text'
+      value={lastName}
+      onChange={(event) => setLastName(event.target.value)}
+      autoFocus
+    />
+  );
+
+  // Email input element.
   const emailInputElement = (
     <TextField
       className='login__card__email-input'
       label='Email'
       variant='standard'
-      helperText={!!error ? 'Invalid email' : ''}
       color='secondary'
       type='email'
+      value={email}
       onChange={(event) => setEmail(event.target.value)}
       autoFocus
-      {...email}
     />
   );
 
+  // Password input element.
   const passwordInputElement = (
     <TextField
       className='login__card__password-input'
       label='Password'
       variant='standard'
-      helperText={!!error ? 'Invalid password' : ''}
       color='secondary'
       type='password'
+      value={password}
       onChange={(event) => setPassword(event.target.value)}
-      {...password}
     />
   );
 
-  const loginButtonElement = (
+  // Auth button element.
+  let authButtonElementTextValue = '';
+
+  if (authAction === 'logging') authButtonElementTextValue = 'Login';
+
+  if (authAction === 'registering') authButtonElementTextValue = 'Register';
+
+  const authButtonElement = (
     <Button
       variant='outlined'
       disabled={isLoading}
@@ -118,7 +210,7 @@ const Login = () => {
       type='submit'
       fullWidth
     >
-      {isLoading ? 'Loading...' : 'Login'}
+      {isLoading ? 'Loading...' : authButtonElementTextValue}
     </Button>
   );
 
@@ -130,8 +222,21 @@ const Login = () => {
           <CardContent>
             <Grid container rowGap={2}>
               <Grid item xs={12}>
+                {authActionElement}
+              </Grid>
+              <Grid item xs={12}>
                 {cardTitleMessageElement}
               </Grid>
+              {authAction === 'registering' && (
+                <>
+                  <Grid item xs={12}>
+                    {firstNameInputElement}
+                  </Grid>
+                  <Grid item xs={12}>
+                    {lastNameInputElement}
+                  </Grid>
+                </>
+              )}
               <Grid item xs={12}>
                 {emailInputElement}
               </Grid>
@@ -139,7 +244,7 @@ const Login = () => {
                 {passwordInputElement}
               </Grid>
               <Grid item xs={12} marginTop={1}>
-                {loginButtonElement}
+                {authButtonElement}
               </Grid>
             </Grid>
           </CardContent>

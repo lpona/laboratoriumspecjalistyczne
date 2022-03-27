@@ -5,3 +5,5 @@ export type TCurrentUser = {
   firstName: string;
   lastName: string;
 };
+
+export type TAuthAction = 'logging' | 'registering';
