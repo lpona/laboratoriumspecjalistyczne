@@ -2,10 +2,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
 import {
   SIGN_IN_ENDPOINT_URL,
+  SIGN_UP_ENDPOINT_URL,
   VERIFY_TOKEN_ENDPOINT_URL,
 } from '../constants/endpoints';
 import { AUTH_MESSAGES } from '../constants/messages';
-import { TCurrentUser } from '../types';
+import { TAuthAction, TCurrentUser } from '../types';
 import { RootState } from './store';
 
 const { SIGN_IN_ERROR } = AUTH_MESSAGES;
@@ -26,16 +27,36 @@ const initialState: CurrentUserInterface = {
   error: '',
 };
 
-// Sign in
-export const signIn = createAsyncThunk(
-  'currentUser/signIn',
-  async ({ email, password }: { email: string; password: string }) => {
+// Authenticate
+export const authenticate = createAsyncThunk(
+  'currentUser/authenticate',
+  async (payload: {
+    firstName?: string;
+    lastName?: string;
+    email: string;
+    password: string;
+    authAction: TAuthAction;
+  }) => {
+    const { authAction } = payload;
+
+    let url = '';
+    let body;
+
+    if (authAction === 'logging') {
+      url = SIGN_IN_ENDPOINT_URL;
+      const { email, password } = payload;
+      body = { email, password };
+    }
+
+    if (authAction === 'registering') {
+      url = SIGN_UP_ENDPOINT_URL;
+      const { firstName, lastName, email, password } = payload;
+      body = { firstName, lastName, email, password };
+    }
+
     try {
       const { data }: AxiosResponse<{ user: TCurrentUser; token: string }> =
-        await axios.post(SIGN_IN_ENDPOINT_URL, {
-          email,
-          password,
-        });
+        await axios.post(url, body);
 
       return data;
     } catch ({ message }) {
@@ -93,21 +114,24 @@ export const currentUserSlice = createSlice({
   name: 'currentUser',
   initialState,
   reducers: {
+    clearError: (state) => {
+      state.error = '';
+    },
     clearCurrentUser: () => initialState,
   },
   extraReducers: (builder) => {
     builder
-      // Sign in
-      .addCase(signIn.pending, (state) => {
+      // Authenticate
+      .addCase(authenticate.pending, (state) => {
         state.isLoading = true;
         state.error = '';
       })
-      .addCase(signIn.fulfilled, (state, action) => {
+      .addCase(authenticate.fulfilled, (state, action) => {
         state.isLoading = false;
 
         setCurrentUserState(state, action);
       })
-      .addCase(signIn.rejected, (state) => {
+      .addCase(authenticate.rejected, (state) => {
         state.isLoading = false;
         state.error = SIGN_IN_ERROR;
       })
@@ -120,6 +144,6 @@ export const currentUserSlice = createSlice({
   },
 });
 
-export const { clearCurrentUser } = currentUserSlice.actions;
+export const { clearError, clearCurrentUser } = currentUserSlice.actions;
 
 export default currentUserSlice.reducer;

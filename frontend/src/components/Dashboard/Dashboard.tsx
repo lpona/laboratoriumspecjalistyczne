@@ -25,8 +25,7 @@ const Dashboard = () => {
 
   return (
     <div className='dashboard'>
-      Welcome {fullName}!<br />
-      <br />
+      <p>Welcome {fullName}!</p>
       <input
         type='button'
         onClick={signOutOnClickHandler}
