@@ -1,7 +1,12 @@
+* {
+  font-family: Helvetica, sans-serif;
+}
+header {
+  z-index: 999;
+}
 .dashboard {
   padding-top: 120px;
   background-color: black;
-  color: #fff;
 }
 
 .buttonOut {
@@ -17,11 +22,23 @@
   display: inline-block;
   background-color: black;
   font-size: 20px;
-  //position: fixed;
-
 }
 
 .idlist {
+
+  div:active {
+    -webkit-transform: scale(3);
+    transform: scale(3);
+    //-webkit-transition: 0.3s ease-in-out;
+    transition: 0.5s ease-in-out;
+    position: fixed;
+    background-color: whitesmoke;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+  }
+  padding-left: 330px;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   gap: 50px;
@@ -34,19 +51,19 @@
   margin: 45px 0 60px 0;
 }
 
-
 .menu {
   color: white;
   display: grid;
   grid-template-columns: 2fr 11fr;
   color: #fa62e1;
   font-weight: bold;
-  text-transform: uppercase;
   justify-content: space-between;
 }
 
-
-.category li {
+.category {
+  position: fixed;
+}
+li {
   list-style: none;
   padding-top: 10px;
   text-align: center;

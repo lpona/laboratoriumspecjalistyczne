@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import MOVIES_DUMMY_DATA from '../../../src/top100movies.json';
-import useSignOut from '../../hooks/useSignOut';
-import { RootState } from '../../rtk/store';
-import Footer from '../Footer/Footer';
-import './Dashboard.scss';
+import React from "react";
+import { useSelector } from "react-redux";
+import MOVIES_DUMMY_DATA from "../../../src/top100movies.json";
+import useSignOut from "../../hooks/useSignOut";
+import { RootState } from "../../rtk/store";
+import Footer from "../Footer/Footer";
+import "./Dashboard.scss";
 
 const Dashboard = () => {
   const { firstName, lastName } = useSelector(
@@ -19,27 +19,27 @@ const Dashboard = () => {
 
   const moviesElementsList = movies.map((movie) => (
     <div key={movie.id}>
-      <img src={movie.image} alt={movie.title}
-      /><br /><br />
+      <img src={movie.image} alt={movie.title} />
+      <br />
+      <br />
       {movie.title}
     </div>
-
   ));
 
   return (
-    <div className='dashboard'>
+    <div className="dashboard">
       <p>Welcome {fullName}!</p>
       <button>
         <input
-          type='button'
+          type="button"
           onClick={signOutOnClickHandler}
-          value='Logout'
-          className='buttonOut'
+          value="Logout"
+          className="buttonOut"
         />
         <br />
       </button>
       <div className="menu">
-        <div className='category'>
+        <div className="category">
           <ul>
             <li>Top 100</li>
             <li> Najwyżej oceniane</li>
@@ -48,10 +48,9 @@ const Dashboard = () => {
             <li>Dramaty</li>
             <li>Horrory</li>
             <li>Komedie</li>
-            <li>Kryminalne</li>
           </ul>
         </div>
-        <div className='idlist'>{moviesElementsList}</div>
+        <div className="idlist">{moviesElementsList}</div>
       </div>
 
       <Footer />
