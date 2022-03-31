@@ -3,12 +3,61 @@
   background-color: black;
   color: #fff;
 }
+
 .buttonOut {
   padding-top: 0px;
+  color: #fa62e1;
+  font-weight: bold;
+  text-transform: uppercase;
+  outline: none;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: black;
+  font-size: 20px;
   //position: fixed;
+
 }
 
 .idlist {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 50px;
   flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 50px;
+  margin: 45px 0 60px 0;
+}
+
+
+.menu {
+  color: white;
+  display: grid;
+  grid-template-columns: 2fr 11fr;
+  color: #fa62e1;
+  font-weight: bold;
+  text-transform: uppercase;
+  justify-content: space-between;
+}
+
+
+.category li {
+  list-style: none;
+  padding-top: 10px;
+  text-align: center;
+  border: 2px solid #ce93d8;
+  padding: 5px 5px;
+  border-radius: 10px;
+  margin: 50px 10px 10px 10px;
+  width: 300px;
+}
+
+p {
+  font-size: 30px;
+  text-align: center;
 }

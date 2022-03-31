@@ -3,18 +3,17 @@
   margin: 0;
   padding: 0;
 }
+
 .background {
   height: 100vh;
   background-color: black;
   color: #fff;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       transparent 14%,
       rgba(0, 0, 0, 0.3) 49%,
       rgba(0, 0, 0, 0.3) 85%,
-      transparent
-    ),
+      transparent),
     url(https://developer.imdb.com/hero-dynamic.jpg);
 }
 
@@ -30,4 +29,23 @@ h1 {
   color: #fff;
   font-size: 80px;
   line-height: 1em;
+}
+
+.info {
+  margin-top: 40px;
+  margin-left: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.items {
+
+  border-left: 6px solid #ac0582;
+  font-size: 20px;
+  width: 400px;
+  letter-spacing: normal;
+  font-weight: 600;
+  padding-left: 1rem;
+  line-height: 30px;
 }
