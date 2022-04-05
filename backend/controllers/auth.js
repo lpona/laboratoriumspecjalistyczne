@@ -1,7 +1,7 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
-import { AUTH_MESSAGES } from '../constants/messages.js';
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
+import { AUTH_MESSAGES } from "../constants/messages.js";
 
 const { INVALID_CREDENTIALS, INVALID_TOKEN } = AUTH_MESSAGES;
 
@@ -33,8 +33,8 @@ const signUpController = async (req, res) => {
 
     // Generate token.
     var token = jwt.sign(user, process.env.JWT_SECRET);
-  } catch ({ message }) {
-    return res.status(500).json({ message });
+  } catch (error) {
+    return res.status(500).json(error);
   }
 
   return res.status(201).json({ user, token });
@@ -75,9 +75,9 @@ const signInController = async (req, res) => {
  * @access  Public
  */
 const verifyTokenController = async (req, res) => {
-  const token = req.headers['authorization'].replace('Bearer ', '');
+  const token = req.headers["authorization"].replace("Bearer ", "");
 
-  if (!token) throw new Error('Missing token.');
+  if (!token) throw new Error("Missing token.");
 
   try {
     const { _id } = jwt.verify(token, process.env.JWT_SECRET);
