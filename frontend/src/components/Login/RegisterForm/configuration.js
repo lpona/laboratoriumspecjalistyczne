@@ -1,0 +1,43 @@
+export const registerForm = [
+  {
+    className: "login__card__first-name-input",
+    label: "First name",
+    variant: "standard",
+    color: "secondary",
+    type: "text",
+    name: "firstName",
+    autoFocus: true,
+  },
+  {
+    className: "login__card__last-name-input",
+    label: "Last name",
+    name: "lastName",
+    variant: "standard",
+    color: "secondary",
+    type: "text",
+  },
+  {
+    className: "login__card__email-input",
+    label: "Email",
+    name: "email",
+    variant: "standard",
+    color: "secondary",
+    type: "email",
+  },
+  {
+    className: "login__card__password-input",
+    label: "Password",
+    name: "password",
+    variant: "standard",
+    color: "secondary",
+    type: "password",
+  },
+  {
+    className: "login__card__password-input",
+    label: "Repeat Password",
+    name: "repeatPassword",
+    variant: "standard",
+    color: "secondary",
+    type: "password",
+  },
+];
