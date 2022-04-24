@@ -1,0 +1,23 @@
+.box-name-change {
+    display: flex;
+    justify-content: center;
+
+    .MuiCardContent-root {
+      background-color: #020202;
+      border: 1px solid #181818;
+    }
+  
+    &-card {
+      width: 90%;
+      max-width: 20rem;
+  
+      &-input {
+        width: 100%;
+  
+        div > input {
+          padding: 0.5em;
+        }
+      }
+    }
+  }
+  

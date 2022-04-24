@@ -1,20 +1,21 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect, Route } from 'react-router-dom';
-import { RootState } from '../rtk/store';
+import React from "react";
+import { Redirect, Route } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, ...rest }: any) => {
-  const _id = useSelector((state: RootState) => state.currentUser._id);
+const PrivateRoute = ({
+  component: Component,
+  isAuthenticated,
+  ...rest
+}: any) => {
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        !!_id ? (
-          <Component {...props} />
+        !isAuthenticated ? (
+            <Component {...props} />
         ) : (
           <Redirect
-            to={{ pathname: '/login', state: { from: props.location } }}
+            to={{ pathname: "/login", state: { from: props.location } }}
           />
         )
       }
