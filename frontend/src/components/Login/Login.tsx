@@ -1,32 +1,32 @@
-import React, { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 
-import { authenticate } from "../../rtk/currentUserSlice";
-import { AppDispatch, RootState } from "../../rtk/store";
-import { TAuthAction } from "../../types";
+import { authenticate } from '../../rtk/currentUserSlice';
+import { AppDispatch, RootState } from '../../rtk/store';
+import { TAuthAction } from '../../types';
 
-import { Box, Card, CardContent, Grid } from "@mui/material";
-import {} from "@mui/system";
+import { Box, Card, CardContent, Grid } from '@mui/material';
+import {} from '@mui/system';
 
-import ActionElement from "./ActionElement";
-import LoginForm from "./LoginForm/LoginForm";
-import RegisterForm from "./RegisterForm/RegisterForm";
-import TitleMessageElement from "./TitleMessageElement";
+import ActionElement from './ActionElement';
+import LoginForm from './LoginForm/LoginForm';
+import RegisterForm from './RegisterForm/RegisterForm';
+import TitleMessageElement from './TitleMessageElement';
 
-import backgroundVideo from "../../assets/videos/background.mp4";
-import "./Login.scss";
+import backgroundVideo from '../../assets/videos/background.mp4';
+import './Login.scss';
 
 const Login = () => {
   // Global state.
   const dispatch = useDispatch<AppDispatch>();
 
   const { isLoading, error, _id } = useSelector(
-    (state: RootState) => state.currentUser,
+    (state: RootState) => state.currentUser
   );
 
-  const [authAction, setAuthAction] = useState<TAuthAction>("logging");
+  const [authAction, setAuthAction] = useState<TAuthAction>('logging');
 
   // Router.
   const history = useHistory();
@@ -35,8 +35,8 @@ const Login = () => {
   const abortControllerRef = useRef(() => {});
 
   const changeAuthActionOnClickHandler = () => {
-    if (authAction === "logging") setAuthAction("registering");
-    if (authAction === "registering") setAuthAction("logging");
+    if (authAction === 'logging') setAuthAction('registering');
+    if (authAction === 'registering') setAuthAction('logging');
   };
 
   const onSubmitHandler = async (event: any) => {
@@ -48,17 +48,17 @@ const Login = () => {
           email: event.email,
           password: event.password,
           authAction,
-        }),
+        })
       );
       abortControllerRef.current = signInAsyncThunkPromise.abort;
 
       const { token } = await signInAsyncThunkPromise.unwrap();
 
-      localStorage.setItem("token", token);
+      localStorage.setItem('token', token);
 
-      if (!!token) history.push("/dashboard");
+      if (!!token) history.push('/dashboard');
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
 
@@ -66,7 +66,7 @@ const Login = () => {
   useEffect(() => () => abortControllerRef.current(), []);
 
   // Renders.
-  if (!!_id) return <Redirect to="/dashboard" />;
+  if (!!_id) return <Redirect to='/dashboard' />;
 
   /**
    * Background video rendered
@@ -74,19 +74,19 @@ const Login = () => {
    * due to React Portal.
    */
   const backgroundVideoElement = createPortal(
-    <div className="background-box">
+    <div className='background-box'>
       <video autoPlay loop muted>
-        <source src={backgroundVideo} type="video/mp4" />
+        <source src={backgroundVideo} type='video/mp4' />
       </video>
     </div>,
-    document.getElementById("background-video") as Element,
+    document.getElementById('background-video') as Element
   );
 
   return (
-    <Box className="login" component="form" onSubmit={onSubmitHandler}>
+    <Box className='login' component='form' onSubmit={onSubmitHandler}>
       <>
         {backgroundVideoElement}
-        <Card className="login__card">
+        <Card className='login__card'>
           <CardContent>
             <Grid container rowGap={2}>
               <Grid item xs={12}>
@@ -102,10 +102,10 @@ const Login = () => {
                   authAction={authAction}
                 />
               </Grid>
-              {authAction === "logging" && (
+              {authAction === 'logging' && (
                 <LoginForm isLoading={isLoading} onSubmit={onSubmitHandler} />
               )}
-              {authAction === "registering" && (
+              {authAction === 'registering' && (
                 <RegisterForm
                   isLoading={isLoading}
                   onSubmit={onSubmitHandler}

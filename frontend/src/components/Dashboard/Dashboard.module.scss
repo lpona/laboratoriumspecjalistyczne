@@ -1,0 +1,135 @@
+* {
+  font-family: Helvetica, sans-serif;
+}
+
+header {
+  z-index: 999;
+}
+
+.dashboard {
+  background-color: black;
+}
+
+.welcome {
+  margin-block: 1rem;
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+}
+
+.buttonOut {
+  width: 100%;
+  padding-top: 0px;
+  color: #fa62e1;
+  font-weight: bold;
+  text-transform: uppercase;
+  outline: none;
+  border: 2px solid #ce93d8;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: black;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.idlist {
+  padding-left: 330px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 50px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 50px;
+  margin: 45px 0 60px 0;
+}
+
+.menu {
+  color: white;
+  display: grid;
+  grid-template-columns: 2fr 11fr;
+  color: #fa62e1;
+  font-weight: bold;
+  justify-content: space-between;
+}
+
+.category {
+  position: fixed;
+  top: 4rem;
+  padding: 2rem;
+  background-color: #000;
+  border-radius: 0.25rem;
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.2s;
+
+  li {
+    list-style: none;
+    padding-top: 10px;
+    text-align: center;
+    border: 2px solid #ce93d8;
+    padding: 5px 5px;
+    border-radius: 10px;
+    width: 300px;
+
+    &:not(:first-of-type) {
+      margin: 2rem 0;
+    }
+  }
+}
+
+.categoryVisible {
+  transform: translateX(0);
+}
+
+.close {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  font-size: 1.15rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.closedMenu {
+  box-sizing: content-box;
+  width: 2rem;
+  height: 2rem;
+  position: fixed;
+  top: 0;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  background-color: #000;
+  z-index: 1000;
+  cursor: pointer;
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+    color: #fff;
+  }
+}
+
+.progress {
+  width: calc(50% - 2.5rem);
+}
+
+.trophy {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  color: #fff;
+}

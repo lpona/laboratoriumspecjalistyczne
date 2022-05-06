@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/lpona/laboratoriumspecjalistyczne/issues"
   },
-  "homepage": "https://github.com/lpona/laboratoriumspecjalistyczne#readme"
+  "homepage": "https://github.com/lpona/laboratoriumspecjalistyczne#readme",
+  "dependencies": {
+    "classnames": "^2.3.1"
+  }
 }
