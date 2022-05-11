@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { NavLink, useRouteMatch, Route, Switch } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { NavLink, useRouteMatch, Route, Switch } from 'react-router-dom';
 
-import { RootState } from "../../../rtk/store";
-import useSignOut from "../../../hooks/useSignOut";
+import { RootState } from '../../../rtk/store';
+import useSignOut from '../../../hooks/useSignOut';
 
-import BoxNameChange from "../BoxNameChange/BoxNameChange";
-import BoxPasswordChange from "../BoxPasswordChange/BoxPasswordChange";
-import BoxEmailChange from "../BoxEmailChange/BoxEmailChange";
-import BoxAccountData from "../BoxAccountData/BoxAccountData";
-import Footer from "../../Footer/Footer";
+import BoxNameChange from '../BoxNameChange/BoxNameChange';
+import BoxPasswordChange from '../BoxPasswordChange/BoxPasswordChange';
+import BoxEmailChange from '../BoxEmailChange/BoxEmailChange';
+import BoxAccountData from '../BoxAccountData/BoxAccountData';
+import Footer from '../../Footer/Footer';
 
-import "./BoxUserAccount.scss";
+import './BoxUserAccount.scss';
 
 const BoxUserAccount = (props: any) => {
   const { firstName } = useSelector((state: RootState) => state.currentUser);
@@ -28,50 +28,51 @@ const BoxUserAccount = (props: any) => {
     } else {
       setVisible(true);
     }
-  }, [props.location.pathname]);
+  }, [props.location.pathname, props.match.url]);
 
   return (
     <>
       <div className="box-user-account">
         <div className="box-user-account-container">
           {!visible && (
-            <div className="box-user-account-navigation">
+            <div className='box-user-account-navigation'>
               <NavLink to={url}>back to the user panel</NavLink>
             </div>
           )}
           {visible && (
-            <div className="box-user-account-content">
+            <div className='box-user-account-content'>
               <NavLink to={`${url}/account-data`}>
-                <div className="box-user-account-content-item">
+                <div className='box-user-account-content-item'>
                   <>
                     <p>your data</p>
                   </>
                 </div>
               </NavLink>
               <NavLink to={`${url}/name-change`}>
-                <div className="box-user-account-content-item">
+                <div className='box-user-account-content-item'>
                   <>
                     <p>change name or surname</p>
                   </>
                 </div>
               </NavLink>
               <NavLink to={`${url}/password-change`}>
-                <div className="box-user-account-content-item">
+                <div className='box-user-account-content-item'>
                   <>
                     <p>change password</p>
                   </>
                 </div>
               </NavLink>
               <NavLink to={`${url}/email-change`}>
-                <div className="box-user-account-content-item">
+                <div className='box-user-account-content-item'>
                   <>
                     <p>change email</p>
                   </>
                 </div>
               </NavLink>
               <div
-                className="box-user-account-content-item logout"
-                onClick={() => signOutOnClickHandler()}>
+                className='box-user-account-content-item logout'
+                onClick={() => signOutOnClickHandler()}
+              >
                 <>
                   <p>logout</p>
                 </>
@@ -84,14 +85,8 @@ const BoxUserAccount = (props: any) => {
               path={`${path}/password-change`}
               component={BoxPasswordChange}
             />
-            <Route
-              path={`${path}/email-change`}
-              component={BoxEmailChange}
-            />
-            <Route
-              path={`${path}/account-data`}
-              component={BoxAccountData}
-            />
+            <Route path={`${path}/email-change`} component={BoxEmailChange} />
+            <Route path={`${path}/account-data`} component={BoxAccountData} />
           </Switch>
         </div>
       </div>

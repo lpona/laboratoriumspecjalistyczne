@@ -1,0 +1,24 @@
+.cardHeader {
+  text-align: center;
+}
+
+.cardMedia {
+  height: 13.5rem;
+  padding: 1rem;
+  object-fit: contain !important;
+  background: hsl(0, 0%, 14%);
+}
+
+.cardContent {
+  padding-bottom: 0;
+}
+
+.cardContentTypography {
+  &:not(:first-of-type) {
+    margin-top: 0.75rem;
+  }
+}
+
+.cardActions {
+  justify-content: space-between;
+}
