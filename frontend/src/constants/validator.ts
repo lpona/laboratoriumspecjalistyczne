@@ -1,5 +1,5 @@
 const isValue = (value: any) => {
-  return /[a-zA-Z]{1,}/.test(value) ? false : "This field is required.";
+  return /[a-zA-Z]{1,}$/.test(value) ? false : "This field is required.";
 };
 
 const isPassword = (value: any) => {
