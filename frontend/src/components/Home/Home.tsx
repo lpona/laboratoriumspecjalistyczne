@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../Footer/Footer";
 import "./Home.scss";
-function Home() {
+const Home = () => {
   return (
     <div>
       <div className="background">

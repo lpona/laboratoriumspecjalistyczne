@@ -99,4 +99,87 @@ const verifyTokenController = async (req, res) => {
   }
 };
 
-export { signUpController, signInController, verifyTokenController };
+const changeNameController = async (req, res) => {
+  const { firstName, lastName, id } = req.body;
+
+  const user = {
+    firstName,
+    lastName,
+  };
+
+  let newUser;
+
+  try {
+    newUser = await User.findOneAndUpdate({ _id: id }, user);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+
+  // Convert to user object.
+  newUser = newUser.toUserObject();
+
+  // Generate token.
+  const token = jwt.sign(newUser, process.env.JWT_SECRET);
+
+  return res.status(201).json({ newUser, token });
+};
+
+const changePasswordController = async (req, res) => {
+  const { password, id } = req.body;
+
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, salt);
+
+  const user = {
+    password: hashedPassword,
+  };
+
+  let newUser;
+
+  try {
+    newUser = await User.findOneAndUpdate({ _id: id }, user);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+
+  // Convert to user object.
+  newUser = newUser.toUserObject();
+
+  // Generate token.
+  const token = jwt.sign(newUser, process.env.JWT_SECRET);
+
+  return res.status(201).json({ newUser, token });
+};
+
+const changeEmailController = async (req, res) => {
+  const { email, id } = req.body;
+
+  const user = {
+    email,
+  };
+
+  let newUser;
+
+  try {
+    newUser = await User.findOneAndUpdate({ _id: id }, user);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+
+  // Convert to user object.
+  newUser = newUser.toUserObject();
+
+  // Generate token.
+  const token = jwt.sign(newUser, process.env.JWT_SECRET);
+
+  return res.status(201).json({ newUser, token });
+};
+
+export {
+  signUpController,
+  signInController,
+  verifyTokenController,
+  changeNameController,
+  changePasswordController,
+  changeEmailController,
+};

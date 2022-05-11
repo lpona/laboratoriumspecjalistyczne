@@ -1,13 +1,16 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosResponse } from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios, { AxiosResponse } from "axios";
 import {
+  CHANGE_EMAIL,
+  CHANGE_NAME_SURNAME,
+  CHANGE_PASSWORD,
   SIGN_IN_ENDPOINT_URL,
   SIGN_UP_ENDPOINT_URL,
   VERIFY_TOKEN_ENDPOINT_URL,
-} from '../constants/endpoints';
-import { AUTH_MESSAGES } from '../constants/messages';
-import { TAuthAction, TCurrentUser } from '../types';
-import { RootState } from './store';
+} from "../constants/endpoints";
+import { AUTH_MESSAGES } from "../constants/messages";
+import { TAuthAction, TCurrentUser } from "../types";
+import { RootState } from "./store";
 
 const { SIGN_IN_ERROR } = AUTH_MESSAGES;
 
@@ -18,18 +21,18 @@ interface CurrentUserInterface extends TCurrentUser {
 }
 
 const initialState: CurrentUserInterface = {
-  _id: '',
-  email: '',
-  firstName: '',
-  lastName: '',
-  token: localStorage.getItem('token') || '',
+  _id: "",
+  email: "",
+  firstName: "",
+  lastName: "",
+  token: localStorage.getItem("token") || "",
   isLoading: false,
-  error: '',
+  error: "",
 };
 
 // Authenticate
 export const authenticate = createAsyncThunk(
-  'currentUser/authenticate',
+  "currentUser/authenticate",
   async (payload: {
     firstName?: string;
     lastName?: string;
@@ -39,16 +42,16 @@ export const authenticate = createAsyncThunk(
   }) => {
     const { authAction } = payload;
 
-    let url = '';
+    let url = "";
     let body;
 
-    if (authAction === 'logging') {
+    if (authAction === "logging") {
       url = SIGN_IN_ENDPOINT_URL;
       const { email, password } = payload;
       body = { email, password };
     }
 
-    if (authAction === 'registering') {
+    if (authAction === "registering") {
       url = SIGN_UP_ENDPOINT_URL;
       const { firstName, lastName, email, password } = payload;
       body = { firstName, lastName, email, password };
@@ -63,7 +66,58 @@ export const authenticate = createAsyncThunk(
       console.log(message);
       throw new Error();
     }
-  }
+  },
+);
+
+export const changeNameSurname = createAsyncThunk(
+  "currentUser/changeNameSurname",
+  async (payload: { firstName?: string; lastName?: string; id?: string }) => {
+    const url = CHANGE_NAME_SURNAME;
+    const { firstName, lastName, id } = payload;
+    const body = { firstName, lastName, id };
+
+    try {
+      const { data }: AxiosResponse<{ user: TCurrentUser; token: string }> =
+        await axios.put(url, body);
+      return data;
+    } catch ({ message }) {
+      throw new Error();
+    }
+  },
+);
+
+export const changePassword = createAsyncThunk(
+  "currentUser/changePassword",
+  async (payload: { password?: string; id?: string }) => {
+    const url = CHANGE_PASSWORD;
+    const { password, id } = payload;
+    const body = { password, id };
+
+    try {
+      const { data }: AxiosResponse<{ user: TCurrentUser; token: string }> =
+        await axios.put(url, body);
+      return data;
+    } catch ({ message }) {
+      throw new Error();
+    }
+  },
+);
+
+export const changeEmail = createAsyncThunk(
+  "currentUser/changeEmail",
+  async (payload: { email?: string; id?: string }) => {
+    const url = CHANGE_EMAIL;
+    const { email, id } = payload;
+    const body = { email, id };
+
+    try {
+      const { data }: AxiosResponse<{ user: TCurrentUser; token: string }> =
+        await axios.put(url, body);
+      return data;
+    } catch ({ message }) {
+      throw new Error();
+    }
+  },
 );
 
 // Verify token
@@ -72,7 +126,7 @@ export const verifyToken = createAsyncThunk<
   void,
   { state: RootState }
 >(
-  'currentUser/verifyToken',
+  "currentUser/verifyToken",
   async (_, { getState }) => {
     const token = getState().currentUser.token;
 
@@ -92,7 +146,7 @@ export const verifyToken = createAsyncThunk<
   },
   {
     condition: (_, { getState }) => !!getState().currentUser.token,
-  }
+  },
 );
 
 /**
@@ -101,7 +155,7 @@ export const verifyToken = createAsyncThunk<
  */
 const setCurrentUserState = (
   state: any,
-  action: PayloadAction<{ user: TCurrentUser; token: string }>
+  action: PayloadAction<{ user: TCurrentUser; token: string }>,
 ) => {
   state._id = action.payload.user._id;
   state.email = action.payload.user.email;
@@ -111,11 +165,11 @@ const setCurrentUserState = (
 };
 
 export const currentUserSlice = createSlice({
-  name: 'currentUser',
+  name: "currentUser",
   initialState,
   reducers: {
     clearError: (state) => {
-      state.error = '';
+      state.error = "";
     },
     clearCurrentUser: () => initialState,
   },
@@ -124,7 +178,7 @@ export const currentUserSlice = createSlice({
       // Authenticate
       .addCase(authenticate.pending, (state) => {
         state.isLoading = true;
-        state.error = '';
+        state.error = "";
       })
       .addCase(authenticate.fulfilled, (state, action) => {
         state.isLoading = false;

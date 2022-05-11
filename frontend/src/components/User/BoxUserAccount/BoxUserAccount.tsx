@@ -101,14 +101,3 @@ const BoxUserAccount = (props: any) => {
 };
 
 export default BoxUserAccount;
-
-{
-  /* <Switch>
-<Route path={`${path}/:name-change`}>
-  <BoxNameChange history={props.history} />
-</Route>
-<Route path={`${path}/:change-password`}>
-  <BoxPasswordChange history={props.history} />
-</Route>
-</Switch> */
-}
