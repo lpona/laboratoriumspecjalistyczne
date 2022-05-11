@@ -1,0 +1,48 @@
+.backgroundComp3 {
+  height: 100vh;
+  color: #fff;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    linear-gradient(180deg,
+      transparent 14%,
+      rgba(0, 0, 0, 0.3) 49%,
+      rgba(0, 0, 0, 0.3) 85%,
+      transparent),
+    url(../../assets/images/365Back.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+}
+
+.left365 {
+  width: 30vw;
+  margin-left: 350px;
+  background-image: url(../../assets/images/365Port.jpg);
+  border-radius: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 70vh;
+  margin-top: 50px;
+}
+
+.right365 {
+  width: 70vw;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  margin-top: 20px;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.header365 {
+  font-size: 70px;
+  font-family: var(--ipt-font-family);
+  font-weight: 400;
+
+}
+
+p {
+  font-size: 30px;
+}
