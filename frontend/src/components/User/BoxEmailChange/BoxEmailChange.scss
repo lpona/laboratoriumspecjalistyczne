@@ -1,6 +1,9 @@
 .box-email-change {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  grid-gap: 10px;
 
     .MuiCardContent-root {
       background-color: #020202;

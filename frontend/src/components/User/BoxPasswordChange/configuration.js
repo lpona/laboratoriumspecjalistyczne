@@ -6,6 +6,7 @@ export const passwordForm = [
     variant: "standard",
     color: "secondary",
     type: "password",
+    validation: ["isNewValue", "isPassword", "isSamePassword"]
   },
   {
     className: "box-password-change-card-input",
@@ -14,5 +15,6 @@ export const passwordForm = [
     variant: "standard",
     color: "secondary",
     type: "password",
+    validation: ["isNewValue", "isPassword", "isSamePassword"]
   },
 ];

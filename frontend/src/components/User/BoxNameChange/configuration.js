@@ -7,6 +7,7 @@ export const nameForm = [
     type: "text",
     name: "firstName",
     autoFocus: true,
+    validation: ["isValue", "isNewValue"]
   },
   {
     className: "box-name-change-card-input",
@@ -15,5 +16,6 @@ export const nameForm = [
     variant: "standard",
     color: "secondary",
     type: "text",
+    validation: ["isValue", "isNewValue"]
   },
 ];
