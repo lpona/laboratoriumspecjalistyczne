@@ -11,3 +11,7 @@ export const CHANGE_NAME_SURNAME = BASE_URL + '/auth/change-name';
 export const CHANGE_PASSWORD = BASE_URL + '/auth/change-password';
 
 export const CHANGE_EMAIL = BASE_URL + '/auth/change-email';
+
+export const GET_ALL_MOVIES = BASE_URL + '/movies';
+
+export const LIKE_MOVIE = (ID: string) => BASE_URL + `/movies/${ID}`;
