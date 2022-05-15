@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   getAllMoviesController,
-  likeMovieController,
+  updateMovieController,
 } from '../controllers/movie.js';
 import { verifyTokenMiddleware } from '../middleware/auth.js';
 
@@ -11,6 +11,6 @@ const router = Router();
 router.get('/', verifyTokenMiddleware, getAllMoviesController);
 
 // Like movie.
-router.put('/:movieId', verifyTokenMiddleware, likeMovieController);
+router.put('/:movieId', verifyTokenMiddleware, updateMovieController);
 
 export default router;

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MOVIES_DUMMY_DATA from '../../../src/top100movies.json';
 import useSignOut from '../../hooks/useSignOut';
+import { useGetAllMoviesQuery } from '../../rtk/api';
 import { RootState } from '../../rtk/store';
 import Footer from '../Footer/Footer';
 import styles from './Dashboard.module.scss';
@@ -74,7 +75,7 @@ const Dashboard = () => {
 
   const fullName = `${firstName} ${lastName}`;
 
-  const movies = MOVIES_DUMMY_DATA;
+  const { data: movies, error, isLoading } = useGetAllMoviesQuery();
 
   return (
     <div className={styles.dashboard}>
@@ -105,8 +106,8 @@ const Dashboard = () => {
           />
         </Grid>
         <Grid container spacing={2}>
-          {movies.map((movie) => (
-            <Grid key={movie.id} item xs={12} sm={6} md={4}>
+          {movies?.map((movie) => (
+            <Grid key={movie._id} item xs={12} sm={6} md={4}>
               <MovieCard {...movie} onMovieRate={onMovieRateHandler} />
             </Grid>
           ))}

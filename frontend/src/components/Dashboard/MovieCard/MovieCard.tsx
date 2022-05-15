@@ -18,93 +18,93 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useUpdateMovieMutation } from '../../../rtk/api';
 import { RootState } from '../../../rtk/store';
 import { IMovie } from '../../../types';
 import styles from './MovieCard.module.scss';
 
 const MovieCard = ({
-  id,
+  _id,
   title,
   year,
   image,
   crew,
   imDbRating,
   imDbRatingCount,
-  onMovieRate,
+  isLiked,
+  rate,
+  reviews,
 }: IMovie) => {
-  const [isTouched, setIsTouched] = useState(
-    JSON.parse(localStorage.getItem('movies')!)?.find(
-      (movie: any) => movie.id === id
-    )?.isTouched || false
-  );
-  const [isLiked, setIsLiked] = useState(
-    JSON.parse(localStorage.getItem('movies')!)?.find(
-      (movie: any) => movie.id === id
-    )?.isLiked || false
-  );
-  const [rate, setRate] = useState(
-    JSON.parse(localStorage.getItem('movies')!)?.find(
-      (movie: any) => movie.id === id
-    )?.rate || 0
-  );
+  // const [isTouched, setIsTouched] = useState(
+  //   JSON.parse(localStorage.getItem('movies')!)?.find(
+  //     (movie: any) => movie.id === id
+  //   )?.isTouched || false
+  // );
+  // const [rate, setRate] = useState(
+  //   JSON.parse(localStorage.getItem('movies')!)?.find(
+  //     (movie: any) => movie.id === id
+  //   )?.rate || 0
+  // );
 
-  const saveToLocalStorage = useCallback(() => {
-    let movies = JSON.parse(localStorage.getItem('movies')!);
-    const movieObj = {
-      id,
-      rate,
-      isLiked,
-      isTouched,
-    };
-    if (!movies) {
-      localStorage.setItem('movies', JSON.stringify([movieObj]));
-      return;
-    }
-    movies = movies.filter((movie: any) => movie.id !== id);
-    movies.push(movieObj);
-    localStorage.setItem('movies', JSON.stringify(movies));
-  }, [id, rate, isLiked, isTouched]);
+  // const saveToLocalStorage = useCallback(() => {
+  //   let movies = JSON.parse(localStorage.getItem('movies')!);
+  //   const movieObj = {
+  //     id,
+  //     rate,
+  //     isLiked,
+  //     isTouched,
+  //   };
+  //   if (!movies) {
+  //     localStorage.setItem('movies', JSON.stringify([movieObj]));
+  //     return;
+  //   }
+  //   movies = movies.filter((movie: any) => movie.id !== id);
+  //   movies.push(movieObj);
+  //   localStorage.setItem('movies', JSON.stringify(movies));
+  // }, [id, rate, isLiked, isTouched]);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [reviews, setReviews] = useState<string[]>([]);
+  // const [reviews, setReviews] = useState<string[]>([]);
 
-  const isMounting = useRef(true);
+  // const isMounting = useRef(true);
 
-  useEffect(() => {
-    if (isMounting.current) {
-      isMounting.current = false;
-      return;
-    }
-    saveToLocalStorage();
-  }, [saveToLocalStorage]);
+  // useEffect(() => {
+  //   if (isMounting.current) {
+  //     isMounting.current = false;
+  //     return;
+  //   }
+  //   saveToLocalStorage();
+  // }, [saveToLocalStorage]);
+
+  const [updateMovie] = useUpdateMovieMutation();
 
   const onLikeClickHandler = () => {
-    setIsTouched(true);
-    setIsLiked((prevState: boolean) => !prevState);
-    if (isTouched) return;
-    onMovieRate();
+    // setIsTouched(true);
+    // setIsLiked((prevState: boolean) => !prevState);
+    // if (isTouched) return;
+    // onMovieRate();
+    updateMovie({ _id, isLiked: true });
   };
 
   const onRateChangeHandler = (
     event: React.SyntheticEvent<Element, Event>,
-    newValue: number | null
+    rate: number | null
   ) => {
-    setRate(newValue!);
-    if (rate !== 0) return;
-    onMovieRate();
+    // setRate(newValue!);
+    // if (rate !== 0) return;
+    // onMovieRate();
+    updateMovie({ _id, rate });
   };
 
-  const firstName = useSelector(
-    (state: RootState) => state.currentUser.firstName
-  );
-  const lastName = useSelector(
-    (state: RootState) => state.currentUser.lastName
-  );
+  const onAddReviewFormSubmitHandler = (event: any) => {
+    event.preventDefault();
+    updateMovie({ _id, review: event.target.elements.review.value });
+  };
 
   return (
     <>
@@ -202,10 +202,7 @@ const MovieCard = ({
             <Box
               component='form'
               noValidate
-              onSubmit={(event: any) => {
-                event.preventDefault();
-                setReviews([...reviews, event.target.elements.review.value]);
-              }}
+              onSubmit={onAddReviewFormSubmitHandler}
             >
               <TextField
                 id='review'
@@ -226,7 +223,7 @@ const MovieCard = ({
                 Add review
               </Button>
             </Box>
-            {reviews.map((review, index) => (
+            {reviews?.map((review: any, index: number) => (
               <Grid
                 container
                 key={index}
@@ -243,8 +240,10 @@ const MovieCard = ({
               >
                 <Grid item xs={12} md={1}>
                   <Avatar>
-                    {firstName[0]}
-                    {lastName[0]}
+                    {review.author
+                      .split(' ')
+                      .map((name: any) => name[0])
+                      .join('')}
                   </Avatar>
                 </Grid>
                 <Grid
@@ -256,7 +255,7 @@ const MovieCard = ({
                     alignItems: 'center',
                   }}
                 >
-                  <Typography>{review}</Typography>
+                  <Typography>{review.content}</Typography>
                 </Grid>
               </Grid>
             ))}

@@ -12,6 +12,12 @@ const movieSchema = mongoose.Schema({
   isLiked: Boolean,
   isTouched: Boolean,
   rate: Number,
+  reviews: [
+    {
+      author: String,
+      content: String,
+    },
+  ],
 });
 
 const Movie = mongoose.model('Movie', movieSchema);

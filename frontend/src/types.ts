@@ -7,7 +7,7 @@ export type TCurrentUser = {
 };
 
 export interface IMovie {
-  id: string;
+  _id: string;
   rank: string;
   title: string;
   fullTitle: string;
@@ -16,6 +16,10 @@ export interface IMovie {
   crew: string;
   imDbRating: string;
   imDbRatingCount: string;
+  isLiked: boolean;
+  rate: number | null;
+  review: string;
+  reviews: any;
   onMovieRate: () => void;
 }
 
