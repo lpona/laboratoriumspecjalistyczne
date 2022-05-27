@@ -23,9 +23,11 @@ const Header = () => {
             Login
           </NavLink>
         )}
-
         <NavLink activeClassName='active' to='/dashboard'>
           Dashboard
+        </NavLink>
+        <NavLink activeClassName='active' to='/ranking'>
+          Ranking
         </NavLink>
       </div>
     </div>

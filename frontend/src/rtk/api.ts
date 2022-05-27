@@ -21,6 +21,9 @@ export const moviesApi = createApi({
       query: () => '',
       providesTags: () => [{ type: 'Movie' }],
     }),
+    getRanking: builder.query({
+      query: () => '/ranking',
+    }),
     updateMovie: builder.mutation<
       IMovie,
       Partial<IMovie> & Pick<IMovie, '_id'>
@@ -37,4 +40,8 @@ export const moviesApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllMoviesQuery, useUpdateMovieMutation } = moviesApi;
+export const {
+  useGetAllMoviesQuery,
+  useUpdateMovieMutation,
+  useGetRankingQuery,
+} = moviesApi;

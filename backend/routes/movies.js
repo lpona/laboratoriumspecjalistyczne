@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   getAllMoviesController,
+  getRankingController,
   updateMovieController,
 } from '../controllers/movie.js';
 import { verifyTokenMiddleware } from '../middleware/auth.js';
@@ -12,5 +13,7 @@ router.get('/', verifyTokenMiddleware, getAllMoviesController);
 
 // Like movie.
 router.put('/:movieId', verifyTokenMiddleware, updateMovieController);
+
+router.get('/ranking', verifyTokenMiddleware, getRankingController);
 
 export default router;

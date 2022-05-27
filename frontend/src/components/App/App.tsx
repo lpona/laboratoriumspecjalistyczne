@@ -13,6 +13,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import Header from '../Header/Header';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
+import Ranking from '../Ranking/Ranking';
 import BoxUserAccount from '../User/BoxUserAccount/BoxUserAccount';
 import './App.scss';
 
@@ -59,6 +60,11 @@ const App = () => {
               <PrivateRoute
                 path='/account'
                 component={BoxUserAccount}
+                isAuthenticated={isAuthenticated}
+              />
+              <PrivateRoute
+                path='/ranking'
+                component={Ranking}
                 isAuthenticated={isAuthenticated}
               />
             </Switch>

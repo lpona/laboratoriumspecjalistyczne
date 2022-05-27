@@ -6,7 +6,6 @@ import LinearProgress from '@mui/material/LinearProgress';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import MOVIES_DUMMY_DATA from '../../../src/top100movies.json';
 import useSignOut from '../../hooks/useSignOut';
 import { useGetAllMoviesQuery } from '../../rtk/api';
 import { RootState } from '../../rtk/store';
