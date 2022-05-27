@@ -29,6 +29,9 @@ const Header = () => {
         <NavLink activeClassName='active' to='/ranking'>
           Ranking
         </NavLink>
+        <a href='dummy.pdf' target='_blank'>
+          Manual
+        </a>
       </div>
     </div>
   );
